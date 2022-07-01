@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        @media (max-width: 755px){
+            .main-content{
+                display:block;
+                border: 1px solid rgb(207, 207, 207);
+                height:240px;
+                margin:10px;
+                width:90%;
+            }
+            #main-container{
+                justify-content: center;
+                display:flex;
+                flex-direction: column;
+                margin:auto;
+                padding-left: 5%;
+                width:1280px;
+            }
+            #mimg{
+                content: url("/img/m_mainlogo.jpg");
+            }
+            #mimg2{
+                content: url("./img/m_mainlogo2.png");
+            }
+        }
+        @media (min-width: 755px){
+            #mimg{
+                content: url("./img/mainlogo.jpg");
+            }
+            #mimg2{
+                content: url("./img/mainlogo2.png");
+            }
+            .main-content{
+                display:inline-block;
+                margin:10px 20px 10px 20px;
+                height: 240px;
+                width:33%;
+                border: 1px solid rgb(207, 207, 207);
+            }
+            #main-container{
+                justify-content: center;
+                display:flex;
+                margin:auto;
+                width:1280px;
+            }
+        }
+        #container{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+        }
+
+       
+        @keyframes fade {
+            0% {opacity: 0;}
+            5% {opacity: 1;}
+            45% {opacity: 1;}
+            50% {opacity: 1;}
+            80% {opacity: 0;}
+        }
+
+        section{
+            height:300px;
+        }
+
+        main{
+            display:flex;
+            width:100%;
+        }
+
+        .main-content>img{
+            width:100%;
+            height:81.5%;
+            cursor:grab;
+        }
+       
+        #main-content2{
+            display:inline-block;
+            margin:10px 20px 10px 20px;
+            height: 240px;
+            width:33%;     
+        }
+
+        main p{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            color:rgba(0, 0, 0, 0.438);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #main-log{
+            position: relative;
+            display:flex;
+            justify-content: center;
+            width:100%;
+            max-width: 1280px;
+            margin:auto;
+            height:450px;
+        }
+        #main-log img{
+            position:absolute;
+            top:0;bottom:0;
+            text-align: center;
+            width:100%;
+            max-width: 1280px;
+            height:100%;
+            opacity: 0;
+            animation: fade 8s infinite;
+            object-fit: cotain;
+        }
+        #main-log img:nth-child(1) {
+           animation-delay: 0s;
+        }
+
+        #main-log img:nth-child(2) {
+            animation-delay: 3s;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <script>
+        function estimateclick(){
+            window.location.href="/estimate?page=1";
+        }
+        function productclick(){
+            window.location.href="/product?page=1";
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+            <div id="main-log">
+                <img id="mimg">
+                <img id="mimg2">
+           </div>
+            
+        <section>
+            <main>
+                <div id="main-container">
+                    <div class="main-content">
+                        <p>견적문의</p>
+                        <img src="./img/estimate.jpg" onclick="estimateclick()">
+                    </div>
+                    <div class="main-content">
+                        <p>제품소개</p>
+                        <img src="./img/product.jpg" onclick="productclick()">
+                    </div>
+                    <div class="main-content">
+                        <p style="margin-bottom:60px">회사정보</p>
+                        <span style="margin-left:10px">인천광역시 서구 가정로16번길 19</span><br>
+                        <span style="color:blue;margin-left:10px;">TEL : 010-9088-3648</span><br>
+                        <span style="margin-left:10px">E-mail : nts31@hanmail.com</span><br>
+                        <span style="margin-left:10px">금속 케이스 전문 제조업체</span>
+                    </div>
+                </div>
+            </main>
+            <aside>
+                
+            </aside>
+        </section>
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+    
+
+
+</body>
+
+</html>

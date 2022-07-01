@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+                
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>회사소개</p>
+                        </div>
+                        <ul>
+                            <li><a href="/introduce">인사말</a></li>
+                            <li><a href="/introduce2">회사현장</a></li>
+                            <li><a href="/introduce3" style="color:blue">회사위치</a></li>
+                        </ul>
+                    </div>
+                         
+                    <div id="nav-content2" style="overflow-x: scroll;">
+                        <div id="nav-content2-title">
+                            회사위치<br><hr>
+                        </div>
+                        <h4>인천광역시 서구 가정로 16번길 19</h4>
+                        <img src="/img/map.png">
+                    </div>
+                
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

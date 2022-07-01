@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회사명</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        fieldset {
+            background-color: #dadbdb;
+            width:50%;
+            height:110px;
+            margin: auto;
+            margin-top: 35%;
+            padding: 5px;
+        }
+
+        input[type="submit"]{
+            margin-top: 10px;
+            background-color: #00427bd3;
+            color: white;
+            width:100%;
+            height:40px;
+            border:1px solid white;
+            padding:3px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="container">
+        <fieldset>
+            <h3>로그아웃</h3>
+            <form action="/req_logout" method="post"accept-charset="UTF-8" onsubmit="encrypto_pass();">
+                <input id="send" type="submit" value="로그아웃">
+            </form>
+        </fieldset>
+    </div>
+</body>
+
+</html>

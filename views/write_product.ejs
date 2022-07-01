@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <style>
+        #image-container {
+            display: flex;
+            flex-direction: column;
+        }
+     
+
+        form{
+            width:100%;
+        }
+
+
+        .image-label {
+            position: relative;
+            bottom: 22px;
+            left: 5px;
+            color: white;
+            text-shadow: 2px 2px 2px black;
+        }
+
+        #nav-content2-form{
+            display:flex;
+            flex-direction: column;
+            height:auto;
+        }
+
+        textarea{
+            font-size: 15px;
+            width:100%;
+            height:480px;
+        }
+
+        input[type="text"]{
+            width:50%;
+            height: 38px;
+            padding:0px 9px;
+            background-color: #FBFBFB;
+            border:1px solid #cccdcf;
+            border-radius: 5px;
+            color:#777;
+            font-size: 15px;
+        }
+        input[type="file"]{
+            margin-top: 10px;
+            height:38px;
+            width:50%;
+            background-color: #FBFBFB;
+            border:1px solid #cccdcf;
+            border-radius: 5px;
+            padding:5px;
+        }
+        input[type="submit"]{
+            margin-top: 10px;
+            background-color: #00427bd3;
+            color: white;
+            width:50%;
+            height:38px;
+            border:1px solid white;
+            padding:3px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        function open() {
+            const inputImage = document.getElementById("input-image");
+            const maxSize = 1*1024 * 1024;
+            
+            
+            function readImage(input) {    
+                let size = 0;
+                const imageContainer = document.getElementById("image-container");
+                while(imageContainer.hasChildNodes()){
+                    imageContainer.removeChild(imageContainer.firstChild);
+                }
+                if (input.files) {
+                    const fileArr = Array.from(input.files);
+                    fileArr.forEach((file, index) => {
+                        size += file.size;
+                    });
+                    if (size <= maxSize) {
+                        fileArr.forEach((file, index) => {
+                        const reader = new FileReader();
+                           let img = document.createElement("img");
+                           let newimage=new Image();
+                           
+                            reader.onload = e => {
+                                img.src = e.target.result;
+                                
+                                img.onload=function(){
+                                    if(parseInt(img.naturalWidth)>970){
+                                        img.width=img.naturalWidth*0.35;
+                                        img.height=img.naturalHeight*0.35;
+                                    }else{
+                                        img.width=img.naturalWidth;
+                                        img.height=img.naturalHeight;
+                                    } 
+                                    imageContainer.appendChild(img);
+                                }
+                            }
+                            
+                            reader.readAsDataURL(file);
+                        })
+                    } else {
+                        alert("파일 용량 제한");
+                    }
+                }
+            }
+            inputImage.addEventListener("change", e => {
+                readImage(e.target);
+            })
+            
+            // window.onpageshow=function(event){
+            //     if(event.persisted || (window.performance && window.performance.navigation.type==2)){
+            //         let formreset=document.getElementById("formreset");
+            //         formreset.reset();
+            //     }
+            // }
+            // // function noback(){
+            //     window.history.forward();
+                
+            // }
+            // const sendBtn=document.getElementById("sendBtn");
+            // sendBtn.addEventListener("click",noback());
+        }
+
+        function cntChar(obj){
+                const str=obj.value;
+                const str_len=str.length;
+                if(12<str_len){
+                    alert("메시지는 최대 12자를 초과할 수 없습니다.");
+                    str2=str.substr(0,12);
+                    obj.value=str2;
+                    document.getElementById("textcount").innerText=str2.length;
+                }else{
+                    document.getElementById("textcount").innerText=str_len;
+                }
+            }
+    </script>
+</head>
+
+<body onload="open()">
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+
+        <section>
+            <div id="main-content">
+                <div id="nav-content">
+                    <div id="nav-content-title">
+                        <p>제품소개</p>
+                    </div>
+                    <ul>
+                        <li><a href="/kyh_product">키오스크</a></li>
+                    </ul>
+                </div>
+
+                <div id="nav-content2">
+                    <div id="nav-content2-title">
+                        키오스크 작성<br>
+                        <hr>
+                    </div>
+                    <div id="nav-content2-form">
+                        <form id="formreset" action="/write_product" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+                            <input type="text" name="title" placeholder="제목" onkeyup="cntChar(this)" maxlength="12" required>
+                            <span id="textcount">0</span><span> / 12</span><br>   
+                            <input type="file" accept="image/*"name="img" value="이미지 선택" id="input-image"><br>
+                            <input type="submit" id="sendBtn" value="작성">
+                        </form>
+                        
+                    </div>
+                    <div id="image-container"></div>
+                </div>
+
+            </div>
+        </section>
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+
+</html>

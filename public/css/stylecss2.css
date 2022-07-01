@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+
+#container{
+    display: flex;
+    width: 100%;
+    height:auto;
+    flex-direction: column;   
+    overflow: hidden;
+}
+header > div{
+    width:1280px;
+    margin:auto;
+}
+header > div > a{
+    text-align: left;
+}
+
+
+
+@media (max-width: 755px){
+    section{
+        height:auto;
+        margin-bottom: 10px;
+    }
+    #nav-content-title {
+        display: none;
+    }
+    #main-content{
+        justify-content: center;
+        display:flex;
+        flex-direction: column;
+        width: 100%;
+        height:auto;
+        margin:auto;
+    }
+    #nav-content{
+        display:block;
+        width: 100%;
+        height:auto;
+        margin-bottom: 15px;
+    }
+    #nav-content2{
+        display: flex;
+        width:100%;
+        flex-direction: column;
+        height:auto; 
+        padding:5px;
+    }
+}
+@media (min-width: 755px){
+    section{
+        height:auto;
+        margin-top: 33px;
+        margin-bottom: 10px;
+    }
+    #nav-content-title p{
+        text-align: center;
+        font-size: 28px;
+        color:white;
+    }
+    #main-content{
+        justify-content: center;
+        display:flex;
+        width: 100%;
+        height:auto;
+        margin:auto;
+    }
+    #nav-content{
+        display:inline-block;
+        width: 260px;
+        margin-right: 50px;
+        height:auto;
+    }
+    #nav-content #nav-content-title{
+        display:flex;
+        height: 80px;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        background-color: #00427bd3;
+    }
+    #nav-content2{
+        display: inline-block;
+        width:975px;
+        flex-direction: column;
+        height:auto;
+    }
+}
+
+
+
+
+#nav-content ul{
+    list-style-type:none;
+    background-color: rgba(255, 255, 255,255);
+}
+
+#nav-content li{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    border:1px solid #DDD;
+    height:45px;
+}
+ul>li>a{
+    display:inline-block;
+    width:100%;
+    text-decoration: none;
+    text-align: center;
+    color:black;
+}
+
+#nav-content>ul>li>a:hover{
+    color:rgba(0, 0, 0, 0.438);
+}
+
+
+#nav-content2 #nav-content2-title{
+    font-size: 45px;
+    margin-bottom: 15px;
+    color:rgba(0, 0, 0, 0.438);
+}
+
+hr{
+    height: 2px;
+    background-color: cadetblue;
+}

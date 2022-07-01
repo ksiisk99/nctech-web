@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <style>
+        .main-content{
+            display:inline-block;
+            margin:10px;
+            height: 240px;
+            overflow: hidden;
+            text-align: center;
+            width:29%;
+        }
+        .main-content img{
+            margin:0;
+            padding: 0;
+        }
+        .main-content p{
+            text-align: center;
+            margin:0;
+            padding: 0;
+        }
+        #search{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            margin:auto;
+            margin-top: 10px;
+            line-height:30px;
+        }
+        #searchtitle{
+            width:50px;
+            font-size:13px;
+            text-align: center;
+            border-right:1px solid #e2e2e2;
+            background-color: #f9f9f9;
+            color:#555;
+            margin-top: 1px;
+        }
+        #search2{
+            display:flex;
+            border-radius: 2px;
+            border:1px solid #e2e2e2;
+        }
+        input[type="text"]{
+            margin-left: 1px;
+            margin-right: 1px;
+            font-size:15px;
+            border:none;
+            outline:none;
+        }
+        input[type="submit"]{
+            border:none;
+            width:50px;      
+            text-align: center;
+            background-color: #f9f9f9;;
+        }
+        #submitbox{
+            font-size:12px;
+            display:inline-block;
+            background-color: #f9f9f9;
+            color:#555;
+            border-left:1px solid #e2e2e2;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+               
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>제품소개</p>
+                        </div>
+                        <ul>
+                            <li><a href="/product">키오스크</a></li>
+                        </ul>
+                    </div>
+               
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            검색결과<br><hr>
+                        </div>
+                        <% for(var i=0;i<plist.length;i++){ %>
+                            <div class="main-content">
+                                <img src="/uploads/<%= plist[i].img %>" height="190px">
+                                <p><span><%= plist[i].title %></span></p>
+                              
+                                <form action="/delete_product" method="post" accept-charset="UTF-8">
+                                    <input type="hidden" name="img" value="<%= plist[i].img %>">
+                                    <input type="submit" id="sendBtn" value="삭제" style="background-color:#00427bd3;color:white">
+                                </form>
+                            </div>
+                        <% } %>
+                        <div id="search">
+                            <div id="search2">
+                                <span id="searchtitle">제목</span>
+                                <span id="searchform">
+                                <form action="/search_product" method="post" accept-charset="UTF-8">
+                                    <input type="text" name="title" required>
+                                    <input type="hidden" name="id" value="0">
+                                    <div id="submitbox"><input type="submit" value="검색"></div>
+                                </form>
+                                </span>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

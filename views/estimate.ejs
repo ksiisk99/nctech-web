@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <style>
+        #nav-content2-title a{
+            display: block;
+            text-decoration: none;
+            text-align: right;
+            float: right;
+            font-size:22px;
+        }
+        #paging{
+            display:flex;
+            justify-content: center;
+            margin:auto;
+            width:200px;
+            line-height: 25px;
+        }
+        ul>li{
+            text-align: center;
+            list-style-type:none;
+        }
+        li a{
+            color:black;
+        }
+        li button{
+            width:30px;
+            height: 100%;
+        }
+        #search{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            margin:auto;
+            margin-top: 10px;
+            line-height:30px;
+        }
+        #searchtitle{
+            width:50px;
+            margin-top: 1px;
+            font-size:13px;
+            text-align: center;
+            border-right:1px solid #e2e2e2;
+            background-color: #f9f9f9;
+            color:#555;
+        }
+        #search2{
+            display:flex;
+            border-radius: 2px;
+            border:1px solid #e2e2e2;
+        }
+        input[type="text"]{
+            margin-left: 1px;
+            margin-right: 1px;
+            font-size:15px;
+            border:none;
+            outline:none;
+        }
+        input[type="submit"]{
+            border:none;
+            width:50px;      
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        #submitbox{
+            font-size:12px;
+            display:inline-block;
+            background-color: #f9f9f9;
+            color:#555;
+            border-left:1px solid #e2e2e2;
+        }
+        #paging>li>a{
+            text-align: center;
+            width:27px;
+            border:1px solid gray;
+            margin-left: 2px;
+            margin-right: 2px;
+            border-radius: 5px;
+        }
+        #paging>li>button{
+            border:none;
+            width:50px;
+            background-color: white;
+            cursor:pointer;
+        }
+        table{
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+        #nav-content2>p>a{ 
+            font-size: 16px;
+            color:black;
+        }
+        thead tr{
+            background-color: #f9f9f9;
+            border-top:1px solid #e2e2e2;
+            font-size: 15px;
+        }
+        thead th:nth-child(1){
+            border-right: 1px solid #e2e2e2;
+        }
+        thead th:nth-child(5){
+            border-left: 1px solid #e2e2e2;
+        }
+        thead th:nth-child(2){
+            border-right: 1px solid #e2e2e2;
+        }
+        thead th:nth-child(3){
+            border-right: 1px solid #e2e2e2;
+        }
+        tr{
+            height:53px;
+            border-bottom:1px solid #e2e2e2;
+        }
+        tbody td:nth-child(2){
+            text-align: left;
+            padding-left: 5px;
+        }
+        tbody{
+            text-align: center;
+            font-size:15px;
+        }
+        tbody a{
+            text-decoration: none;
+            color:black;
+            font-size: 16px;
+        }
+        table img{
+            width:12px;
+            height:12px;
+        }
+
+    </style>
+    <script>
+       
+        function func(id, public){
+            if(public===1){
+                window.location.href="/read_estimate/"+id;
+            }else if(public===0){
+                window.location.href="/read_estimate2/"+id;
+            }
+        }
+        // var nextbtn=null;
+        // var prevbtn=null;
+        // window.onload=function(){
+        //     prevbtn=document.getElementById("prevbtn");
+        //     nextbtn=document.getElementById("nextbtn");
+        //     nextbtn.addEventListener("click",nextclick());
+        // }
+        // prevbtn.addEventListener("click",prevclick());
+        
+        function nextclick(){
+            let tmp;
+            if(("<%= elist.total %>"/10)>parseInt("<%= elist.pagenum %>"/5+1)*5){
+                if(parseInt("<%= elist.pagenum %>")%5===0){
+                    tmp=parseInt("<%= elist.pagenum %>"/5)*5+1;
+                }else{
+                    tmp=parseInt("<%= elist.pagenum %>"/5+1)*5+1;
+                }
+                window.location.href="/estimate?page="+tmp;
+            }else if(("<%= elist.total %>"/10)>parseInt("<%= elist.pagenum %>")){
+                tmp=parseInt("<%= elist.pagenum %>")+1;
+                window.location.href="/estimate?page="+tmp;
+            }
+        }
+        function prevclick(){
+            let tmp;       
+            if((parseInt("<%= elist.pagenum %>")-1)>=parseInt(parseInt("<%= elist.pagenum %>"-1)/5)*5 && parseInt("<%= elist.pagenum %>")>5 ){
+                tmp=parseInt((parseInt("<%= elist.pagenum %>")-1)/5)*5;
+                window.location.href="/estimate?page="+tmp;
+            }else{
+                tmp=parseInt("<%= elist.pagenum %>")-1;
+                if(tmp>0){
+                    window.location.href="/estimate?page="+tmp;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+                
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>견적문의</p>
+                        </div>
+                        <ul>
+                            <li><a href="/estimate?page=1" style="color:blue">견적문의</a></li>
+                        </ul>
+                    </div>
+                
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            견적문의<br><hr>
+                        </div>
+                        <p><a href="/write_estimate"><img src="/img/editicon.png">견적 작성</a></p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width:55px;">번호</th><th style="width:550px;">제목</th><th style="width:90px;">작성자</th><th style="width:150px;">날짜</th><th style="width:65px;">조회 수</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i=0; i<elist.length;i++){ %>
+                                    <tr>
+                                        <td><%= elist[i].id %></td>
+                                        <td>
+                                            <% if(elist[i].public===1 && elist[i].checkcomment===1) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                    <img src="/img/commenticon.png">
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===0 && elist[i].checkcomment===1) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                    <img src="/img/lockicon.png">
+                                                    <img src="/img/commenticon.png">
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===1 && elist[i].checkcomment===0) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===0 && elist[i].checkcomment===0) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                    <img src="/img/lockicon.png">
+                                                </a>
+                                            <% } %>
+                                        </td>
+                                        <td><%= elist[i].writer %></td>
+                                        <td><%= elist[i].date %></td>
+                                        <td><%= elist[i].views %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                        <ul id="paging">
+                            <li><button id="prevbtn" onclick="prevclick()">&lt; PREV</button></li>
+                            <% if((parseInt(elist.total/10))===(elist.total/10)) { %>
+                                <% for(let i=0;(parseInt((parseInt(elist.pagenum)-1)/5)*5+i)<(parseInt(elist.total/10)) && i<5; i++) { %>
+                                    <% if(parseInt((elist.pagenum-1)/5)*5+i+1 === parseInt(elist.pagenum)) { %>
+                                        <li><a style="background-color:#00427bd3;color:white" href="/estimate?page=<%= parseInt((elist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((elist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% }else{ %>
+                                        <li><a href="/estimate?page=<%= parseInt((elist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((elist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% } %>
+                                <% } %>
+                            <% } else{ %>
+                                <% for(let i=0;(parseInt((parseInt(elist.pagenum)-1)/5)*5+i)<=(parseInt(elist.total/10)) && i<5; i++) { %>
+                                    <% if(parseInt((elist.pagenum-1)/5)*5+i+1 === parseInt(elist.pagenum)) { %>
+                                        <li><a style="background-color:#00427bd3;color:white" href="/estimate?page=<%= parseInt((elist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((elist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% }else{ %>
+                                        <li><a href="/estimate?page=<%= parseInt((elist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((elist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            <li><button id="nextbtn" onclick="nextclick()">NEXT ></button></li>
+                        </ul>
+                        <div id="search">
+                            <div id="search2">
+                            <span id="searchtitle">제목</span>
+                            <span id="searchform">
+                            <form action="/search_estimate" method="post" accept-charset="UTF-8">
+                                <input type="text" name="title" required>
+                                <div id="submitbox"><input type="submit" value="검색"></div>
+                            </form>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+               
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

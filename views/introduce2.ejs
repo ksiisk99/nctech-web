@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <style>
+        #nav-content2 img{
+            width:100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>회사현장</p>
+                        </div>
+                        <ul>
+                            <li><a href="/introduce">인사말</a></li>
+                            <li><a href="/introduce2"style="color:blue">회사현장</a></li>
+                            <li><a href="/introduce3">회사위치</a></li>
+                        </ul>
+                    </div>
+
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            회사현장<br><hr>
+                        </div>
+                        <img src="/img/view1.jpg"><br>
+                        <img src="/img/view2.jpg"><br>
+                        <img src="/img/view3.jpg"><br>
+                        <img src="/img/view5.jpg"><br>
+                        <img src="/img/view6.jpg"><br>
+                        <img src="/img/view7.jpg"><br>
+                        <img src="/img/view8.jpg">
+                    </div>
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    <style>
+        #nav-content2-title a{
+            display: block;
+            text-decoration: none;
+            text-align: right;
+            float: right;
+            font-size:22px;
+        }
+       
+        #search{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 10px;
+            margin:auto;
+            line-height:30px;
+        }
+        #searchtitle{
+            width:50px;
+            font-size:13px;
+            text-align: center;
+            border-right:1px solid #e2e2e2;
+            background-color: #f9f9f9;
+            color:#555;
+            margin-top: 1px;
+        }
+        #search2{
+            display:flex;
+            border-radius: 2px;
+            border:1px solid #e2e2e2;
+        }
+        input[type="text"]{
+            margin-left: 1px;
+            margin-right: 1px;
+            font-size:15px;
+            border:none;
+            outline:none;
+        }
+        input[type="submit"]{
+            border:none;
+            width:50px;      
+            text-align: center;
+           background-color: #f9f9f9;;
+        }
+        #submitbox{
+            font-size:12px;
+            display:inline-block;
+            background-color: #f9f9f9;
+            color:#555;
+            border-left:1px solid #e2e2e2;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+                
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>견적문의</p>
+                        </div>
+                        <ul>
+                            <li><a href="/estimate">견적문의</a></li>
+                        </ul>
+                    </div>
+                
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            검색결과<br><hr>
+                        </div>
+                        
+                        <table border="1">
+                            <thead>
+                                <tr>
+                                    <th>번호</th><th>제목</th><th>작성자</th><th>날짜</th><th>조회 수</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(var i=0; i<elist.length;i++){ %>
+                                    <tr>
+                                        <td><%= elist[i].id %></td>
+                                        <td>
+                                            <% if(elist[i].public===1 && elist[i].checkcomment===1) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                    <span><%= "comment" %></span>
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===0 && elist[i].checkcomment===1) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %><span><%= "password" %></span>
+                                                    <span><%= "comment" %></span>
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===1 && elist[i].checkcomment===0) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %>
+                                                </a>
+                                            <% } %>
+                                            <% if(elist[i].public===0 && elist[i].checkcomment===0) { %>
+                                                <a href="/estimate/<%= elist[i].id %>">
+                                                    <%= elist[i].title %><span><%= "password" %></span>
+                                                </a>
+                                            <% } %>
+                                        </td>
+                                        <td><%= elist[i].writer %></td>
+                                        <td><%= elist[i].date %></td>
+                                        <td><%= elist[i].views %></td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                        
+                        <div id="search">
+                            <div id="search2">
+                                <span id="searchtitle">제목</span>
+                                <span id="searchform">
+                                <form action="/search_estimate" method="post" accept-charset="UTF-8">
+                                    <input type="text" name="title" required>
+                                    <div id="submitbox"><input type="submit" value="검색"></div>
+                                </form>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+               
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

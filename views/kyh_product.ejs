@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <link rel="stylesheet" href="./css/stylecss.css">
+    <link rel="stylesheet" href="./css/stylecss2.css">
+    
+    <style>
+        @media (max-width:755px){
+            .main-content{
+                display:inline-block;
+                margin-left:5%;
+                margin-top:10px;
+                margin-bottom:10px;
+                height: 240px;
+                overflow: hidden;
+                text-align: center;
+                width:40%;           
+            }
+            #nav-content2{
+                display: inline-block;
+                width:100%;
+                flex-direction: column;
+                height:auto;
+            }
+        }
+        @media (min-width:755px){
+            .main-content{
+                display:inline-block;
+                margin:10px;
+                height: 240px;
+                overflow: hidden;
+                text-align: center;
+                width:29%;
+            }
+        }
+        
+        .main-content img{
+            margin:0;
+            padding: 0;
+        }
+        .main-content p{
+            text-align: center;
+            margin:0;
+            padding: 0;
+        }
+        #search{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            margin:auto;
+            margin-top: 10px;
+            line-height:30px;
+        }
+        #searchtitle{
+            width:50px;
+            font-size:13px;
+            text-align: center;
+            border-right:1px solid #e2e2e2;
+            background-color: #f9f9f9;
+            color:#555;
+            margin-top: 1px;
+        }
+       
+        #paging{
+            display:flex;
+            justify-content: center;
+            margin:auto;
+            width:200px;
+            line-height: 25px;
+        }
+        ul>li{
+            text-align: center;
+            list-style-type:none;
+        }
+        li a{
+            color:black;
+        }
+        li button{
+            width:30px;
+            height: 100%;
+        }
+        #search2{
+            display:flex;
+            border-radius: 2px;
+            border:1px solid #e2e2e2;
+        }
+        input[type="text"]{
+            margin-left: 1px;
+            margin-right: 1px;
+            font-size:15px;
+            border:none;
+            outline:none;
+        }
+        input[type="submit"]{
+            border:none;
+            width:50px;      
+            text-align: center;
+           background-color: #f9f9f9;;
+        }
+        #submitbox{
+            font-size:12px;
+            display:inline-block;
+            background-color: #f9f9f9;
+            color:#555;
+            border-left:1px solid #e2e2e2;
+        }
+        #paging>li>a{
+            text-align: center;
+            width:27px;
+            border:1px solid gray;
+            margin-left: 2px;
+            margin-right: 2px;
+            border-radius: 5px;
+        }
+        #paging>li>button{
+            border:none;
+            width:50px;
+            background-color: white;
+            cursor:pointer;
+        }
+        #nav-content2>p>a{
+            font-size: 16px;
+            color:black;
+        }
+   
+    </style>
+    <script>        
+        function nextclick(){
+            let tmp;
+            if(("<%= plist.total %>"/18)>parseInt("<%= plist.pagenum %>"/5+1)*5){
+                if(parseInt("<%= plist.pagenum %>")%5===0){
+                    tmp=parseInt("<%= plist.pagenum %>"/5)*5+1;
+                }else{
+                    tmp=parseInt("<%= plist.pagenum %>"/5+1)*5+1;
+                }
+                window.location.href="/product?page="+tmp;
+            }else if(("<%= plist.total %>"/18)>parseInt("<%= plist.pagenum %>")){
+                tmp=parseInt("<%= plist.pagenum %>")+1;
+                window.location.href="/product?page="+tmp;
+            }
+            
+        }
+        function prevclick(){
+            let tmp;       
+            if((parseInt("<%= plist.pagenum %>")-1)>=parseInt(parseInt("<%= plist.pagenum %>"-1)/5)*5 && parseInt("<%= plist.pagenum %>")>5 ){
+                tmp=parseInt((parseInt("<%= plist.pagenum %>")-1)/5)*5;
+                window.location.href="/product?page="+tmp;
+            }else{
+                tmp=parseInt("<%= plist.pagenum %>")-1;
+                if(tmp>0){
+                    window.location.href="/product?page="+tmp;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+        
+        <section>
+            <div id="main-content">
+               
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>제품소개</p>
+                        </div>
+                        <ul>
+                            <li><a href="/kyh_product?page=1" style="color:blue">키오스크</a></li>
+                        </ul>
+                    </div>
+               
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            키오스크<br><hr>
+                        </div>
+                        <p><a href="/write_product"><img src="/img/editicon.png"></img>글 작성</a></p>
+                        <% for(var i=0;i<plist.length;i++){ %>
+                            <div class="main-content">
+                                <img src="/uploads/<%= plist[i].img %>" height="190px">
+                                <p><span><%= plist[i].title %></span></p>
+                              
+                                <form action="/delete_product" method="post" accept-charset="UTF-8">
+                                    <input type="hidden" name="img" value="<%= plist[i].img %>">
+                                    <input type="submit" id="sendBtn" value="삭제" style="background-color:#00427bd3;color:white">
+                                </form>
+                            </div>
+                        <% } %>
+
+                        <ul id="paging">
+                            <li><button id="prevbtn" onclick="prevclick()">&lt; PREV</button></li>
+                            <% if((parseInt(plist.total/18))===(plist.total/18)) { %>
+                                <% for(let i=0;(parseInt((parseInt(plist.pagenum)-1)/5)*5+i)<(parseInt(plist.total/18)) && i<5; i++) { %>
+                                    <% if(parseInt((plist.pagenum-1)/5)*5+i+1 === parseInt(plist.pagenum)) { %>
+                                        <li><a style="background-color:#00427bd3;color:white" href="/product?page=<%= parseInt((plist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((plist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% }else{ %>
+                                        <li><a href="/product?page=<%= parseInt((plist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((plist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% } %>
+                                <% } %>
+                            <% } else{ %>
+                                <% for(let i=0;(parseInt((parseInt(plist.pagenum)-1)/5)*5+i)<=(parseInt(plist.total/18)) && i<5; i++) { %>
+                                    <% if(parseInt((plist.pagenum-1)/5)*5+i+1 === parseInt(plist.pagenum)) { %>
+                                        <li><a style="background-color:#00427bd3;color:white" href="/product?page=<%= parseInt((plist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((plist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% }else{ %>
+                                        <li><a href="/product?page=<%= parseInt((plist.pagenum-1)/5)*5+i+1 %>"><%= parseInt((plist.pagenum-1)/5)*5+i+1 %></a></li>
+                                    <% } %>
+                                <% } %>
+                            <% } %>
+                            <li><button id="nextbtn" onclick="nextclick()">NEXT ></button></li>
+                        </ul>
+
+                        <div id="search">
+                            <div id="search2">
+                            <span id="searchtitle">제목</span>
+                            <span id="searchform">
+                            <form action="/search_product" method="post" accept-charset="UTF-8">
+                                <input type="text" name="title" required>
+                                <input type="hidden" name="id" value="0">
+                                <div id="submitbox"><input type="submit" value="검색"></div>
+                            </form>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+</html>

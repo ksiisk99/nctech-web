@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>엔씨테크</title>
+    <style>
+        #nav-content2-container {
+            margin-left: 10px;
+            margin-right: 10px;
+            height: 50px;
+        }
+        form{
+            float:right;
+        }
+        #nav-content2-container {
+            width: 95%;
+            padding-top: 5px;
+            padding-left: 10px;
+            margin:auto;
+            height: 35px;
+            margin-top:15px;
+            border:1px solid #cccdcf;
+        }
+        #nav-content2-container2 {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+            margin: auto;
+            margin-top: 10px;
+            margin-bottom:15px;
+            padding:10px;
+            border:1px solid #cccdcf;
+        }
+        #image-container{
+            display:flex;
+            flex-direction: column;
+            height:auto;
+        }
+        #comment-container {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            margin-top:10px;
+        }
+        input[type="submit"]{
+            border:none;
+            width:50px;  
+            height: 25px;  
+            margin-right: 15px;  
+            text-align: center;
+            border-radius: 5px;
+            background-color:#00427bd3;
+            color:white;
+        }
+        #comment{
+            padding-left:10px;
+            margin-top:5px;
+        }
+        #comment>div>span{
+            padding-left: 5px;
+            font-size:15px;
+        }
+        #comment>div>p{
+            font-size:17px;
+        }
+        #comment hr{
+            border:1px solid #cccdcf;
+        }
+    </style>
+
+   <link rel="stylesheet" href="/css/stylecss.css">
+   <link rel="stylesheet" href="/css/stylecss2.css">
+</head>
+
+<body>
+    <div id="container">
+        <header>
+            <%- include("header.ejs") %>
+        </header>
+
+        <section>
+            <div id="main-content">
+                
+                    <div id="nav-content">
+                        <div id="nav-content-title">
+                            <p>견적문의</p>
+                        </div>
+                        <ul>
+                            <li><a href="/estimate?page=1">견적문의</a></li>
+                        </ul>
+                    </div>
+                
+                    <div id="nav-content2">
+                        <div id="nav-content2-title">
+                            견적문의<br>
+                            <hr>
+                        </div>
+                        <h3>
+                            <%= elist.title %>
+                        </h3>
+                        <div id="nav-content2-container">
+                            <img src="/img/usericon.png"> <%= elist.writer %>
+                            &nbsp;&nbsp;&nbsp;<img src="/img/timeicon.png"> <%= elist.date %>
+                            <form action="/delete_estimate" method="post" accept-charset="UTF-8">
+                                <input type="hidden" name="id" value="<%= elist.id %>">
+                                <input type="hidden" name="imgs" value="<%= elist.imgs %>">
+                                <input type="submit" id="sendBtn" value="삭제">
+                            </form>
+                            
+                        </div>
+                        <div id="nav-content2-container2">
+                            <p>
+                                <%= elist.content %>
+                            </p>
+                        </div>
+                        <div id="image-container">
+                            <% if(elist.imgs!==null) {%>
+                            <% for(var i=0; i<elist.imgs.length;i++){ %>
+                                <script>
+                                    const imageContainer = document.getElementById("image-container");
+                                    let img = document.createElement("img");
+                                    let newimage=new Image();
+                                    img.src="/uploads/"+"<%= elist.imgs[i] %>";
+                                    img.onload=function(){
+                                        if(parseInt(img.naturalWidth)>970){
+                                            img.width=img.naturalWidth*0.35;
+                                            img.height=img.naturalHeight*0.35;
+                                        }else{
+                                            img.width=img.naturalWidth;
+                                            img.height=img.naturalHeight;
+                                        } 
+                                        imageContainer.appendChild(img);
+                                    }
+                                </script>
+                            <% }} %>
+                        </div>
+                        <div id="comment-container">
+                            <% if(elist.checkcomment!==0){ %>
+                            <hr>
+                            <span style="font-size:30px;">답변</span><hr>
+                            
+                            
+                                <div id="comment">
+                                    <% for(var i=0; i<elist.comment.length;i++) {%>
+                                        <div>
+                                            <span><img src="/img/usericon.png"> 엔씨테크</span>&nbsp;&nbsp;&nbsp;
+                                            <span><img src="/img/timeicon.png"> <%= elist.comment[i].date %></span>
+                                        </div>
+                                        <div>
+                                            <p><%= elist.comment[i].content %></p>
+                                        </div>
+                                        <hr>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <footer>
+            <%- include("footer.ejs") %>
+        </footer>
+    </div>
+</body>
+
+</html>
